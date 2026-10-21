@@ -10,13 +10,13 @@
   <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
-
+ 
   <div class="app-container">
     <header>
       <h1>📱 FocusEdu</h1>
       <p>Darsda chalg'ishni to'xtatish va diqqatni oshirish platformasi</p>
     </header>
-
+ 
     <!-- RO'YXATDAN O'TISH / ROLNI TANLASH -->
     <div id="role-selection" class="card">
       <h2>Platformaga kirish</h2>
@@ -26,12 +26,16 @@
         <button class="btn btn-secondary" onclick="selectRole('student')">🎓 Talaba</button>
       </div>
     </div>
-
+ 
     <!-- O'QITUVCHI PANELI -->
     <div id="teacher-panel" class="card hidden">
       <h2>👨‍🏫 O'qituvchi Boshqaruv Paneli</h2>
-      
+ 
       <div id="start-lesson-form">
+        <div class="form-group">
+          <label>O'qituvchi paroli:</label>
+          <input type="password" id="teacher-password" placeholder="Parolni kiriting">
+        </div>
         <div class="form-group">
           <label>Fan / Dars nomi:</label>
           <input type="text" id="subject-name" placeholder="Masalan: Oliy Matematika">
@@ -42,52 +46,66 @@
         </div>
         <button class="btn btn-success" onclick="startTeacherLesson()">🚀 Darsni Boshlash va QR-Kod Yaratish</button>
       </div>
-
+ 
       <div id="active-lesson-info" class="hidden">
         <div class="status-badge active">Dars Ketmoqda...</div>
         <h3 id="display-subject"></h3>
         <p>Talabalar ushbu QR-kodni skanerlab ulanishi kerak:</p>
-        
+ 
         <div id="qrcode-container"></div>
-
+ 
+        <p style="text-align:center;">Yoki dars kodini kiritishadi:</p>
+        <div id="lesson-code" style="font-size:2rem;font-weight:bold;letter-spacing:6px;text-align:center;color:#38bdf8;margin:8px 0 16px;font-family:monospace;"></div>
+ 
         <div class="stats-box">
           <p>Ulangan talabalar soni: <strong id="connected-count">0</strong> ta</p>
+          <p style="margin-top:6px;color:#f97316;">Hozir ilovadan chiqib ketganlar: <strong id="away-count">0</strong> ta</p>
         </div>
-
+ 
         <button class="btn btn-danger" onclick="endTeacherLesson()">🔴 Darsni Yakunlash (Blokdan Chiqarish)</button>
       </div>
     </div>
-
+ 
     <!-- TALABA PANELI -->
     <div id="student-panel" class="card hidden">
       <h2>🎓 Talaba Paneli</h2>
-      
+ 
       <div id="student-scanner-box">
         <p>O'qituvchining QR-kodini kameraga tuting:</p>
         <div id="qr-reader"></div>
-        <button class="btn btn-secondary" onclick="simulateScan()">⚡ (Simulyatsiya) QR-kodni avto skanerlash</button>
+ 
+        <div class="form-group" style="margin-top:16px;">
+          <label>Yoki 6 xonali dars kodini kiriting:</label>
+          <input type="text" id="join-code" inputmode="numeric" maxlength="6" placeholder="123456">
+        </div>
+        <button class="btn btn-success" onclick="joinByCode()">✅ Darsga kirish</button>
       </div>
-
+ 
       <!-- TALABA TELEFONI BLOKLANGAN HOLAT -->
       <div id="lock-screen" class="lock-screen hidden">
         <div class="lock-icon">🔒</div>
         <h2>DIQQAT: TELEFON BLOKLANDI!</h2>
         <p class="lock-subtext">Dars tugagunga qadar ilovalarga kirish cheklangan.</p>
-        
+ 
         <div class="timer-box">
           <span>Qolgan vaqt:</span>
           <div id="countdown-timer">00:00</div>
         </div>
-
+ 
         <div class="warning-banner">
           ⚠️ Ilovadan chiqishga urinsangiz, o'qituvchiga ogohlantirish boradi!
         </div>
-
+ 
+        <div id="away-warning" class="warning-banner hidden" style="background:#7f1d1d;color:#fecaca;">
+          🚨 Siz ilovadan chiqdingiz! O'qituvchiga xabar yuborildi.
+        </div>
+ 
+        <button class="btn btn-secondary" style="margin-bottom:12px;" onclick="enterFullscreen()">⛶ Butun ekran rejimi</button>
         <button class="btn btn-outline" onclick="requestEmergency()">🚨 Favqulodda Qo'ng'iroq</button>
       </div>
     </div>
   </div>
-
+ 
   <script src="script.js"></script>
 </body>
 </html>
